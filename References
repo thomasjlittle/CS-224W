@@ -18,3 +18,20 @@ Machine learning strategies for the structure-property relationship of copolymer
 Mapping binary copolymer property space with neural networks
   https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6530542/
   https://github.com/ZwijnenburgGroup/2019-polymer-neural-network
+
+A graph representation of molecular ensembles for polymer property prediction
+  https://arxiv.org/ftp/arxiv/papers/2205/2205.08619.pdf
+  https://github.com/coleygroup/polymer-chemprop
+
+@article{wdmpnn,
+         title={A graph representation of molecular ensembles for polymer property prediction}, 
+         author={Matteo Aldeghi and Connor W. Coley},
+         journal="Chem. Sci.",
+         year="2022",
+         volume="13",
+         issue="35",
+         pages="10486-10498",
+         publisher="The Royal Society of Chemistry",
+         doi="10.1039/D2SC02839E",
+         url="http://dx.doi.org/10.1039/D2SC02839E"
+}
