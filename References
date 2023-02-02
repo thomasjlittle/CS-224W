@@ -23,6 +23,8 @@ A graph representation of molecular ensembles for polymer property prediction
   https://arxiv.org/ftp/arxiv/papers/2205/2205.08619.pdf
   https://github.com/coleygroup/polymer-chemprop
 
+$\sqrt{3x-1}+(1+x)^2$
+
 @article{wdmpnn,
          title={A graph representation of molecular ensembles for polymer property prediction}, 
          author={Matteo Aldeghi and Connor W. Coley},
