@@ -22,18 +22,3 @@ Mapping binary copolymer property space with neural networks
 A graph representation of molecular ensembles for polymer property prediction
   https://arxiv.org/ftp/arxiv/papers/2205/2205.08619.pdf
   https://github.com/coleygroup/polymer-chemprop
-
-$\sqrt{3x-1}+(1+x)^2$
-
-$@article{wdmpnn,
-         title={A graph representation of molecular ensembles for polymer property prediction}, 
-         author={Matteo Aldeghi and Connor W. Coley},
-         journal="Chem. Sci.",
-         year="2022",
-         volume="13",
-         issue="35",
-         pages="10486-10498",
-         publisher="The Royal Society of Chemistry",
-         doi="10.1039/D2SC02839E",
-         url="http://dx.doi.org/10.1039/D2SC02839E"
-}$
