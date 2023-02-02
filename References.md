@@ -25,7 +25,7 @@ A graph representation of molecular ensembles for polymer property prediction
 
 $\sqrt{3x-1}+(1+x)^2$
 
-@article{wdmpnn,
+$@article{wdmpnn,
          title={A graph representation of molecular ensembles for polymer property prediction}, 
          author={Matteo Aldeghi and Connor W. Coley},
          journal="Chem. Sci.",
@@ -36,4 +36,4 @@ $\sqrt{3x-1}+(1+x)^2$
          publisher="The Royal Society of Chemistry",
          doi="10.1039/D2SC02839E",
          url="http://dx.doi.org/10.1039/D2SC02839E"
-}
+}$
