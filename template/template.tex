@@ -1,0 +1,76 @@
+\documentclass{article}
+
+\usepackage[final]{neurips_2019}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{lipsum}
+
+\newcommand{\note}[1]{\textcolor{blue}{{#1}}}
+
+\title{
+  Title of your project \\
+  \vspace{1em}
+  \small{Project Category:} \\
+}
+
+\author{
+  Name: \\
+  SUNet ID: \\
+  Department of Computer Science \\
+  Stanford University \\
+  \texttt{name@stanford.edu} \\
+  % Examples of more authors
+  \And
+  Name: \\
+  SUNet ID: \\
+  Department of Computer Science \\
+  Stanford University \\
+  \texttt{name@stanford.edu} \\
+  \And
+  Name: \\
+  SUNet ID: \\
+  Department of Computer Science \\
+  Stanford University \\
+  \texttt{name@stanford.edu}
+}
+
+\begin{document}
+
+\maketitle
+
+% \begin{abstract}
+%   Required for final report
+% \end{abstract}
+
+
+\note{This template is built on the NeurIPS 2019 template\footnote{\url{https://www.overleaf.com/latex/templates/neurips-2019/tprktwxmqmgk}} and provided for your convenience. Your proposal should include a 300-500 word description of what you plan to do. Presenting pointers to one relevant dataset and one example of prior research on the topic are a valuable (optional) addition.}
+
+\section{Key Information to include}
+
+\begin{itemize}
+    \item External collaborators or mentors (if you have any):
+    \item Sharing project with another class:
+\end{itemize}
+
+\section{Motivation}
+Provide a clear motivation and build up to your problem statement. What problem are you tackling? Is this an application or a theoretical result?
+
+\section{Methodology}
+What machine learning techniques are you planning to apply or improve upon?
+
+\section{Intended experiments}
+What experiments are you planning to run? How do you plan to evaluate your machine learning algorithm? Here is how to use a reference: \cite{attention_vaswani_17} if you want to include them. Include the references in the references.bib file.
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
