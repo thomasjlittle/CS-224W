@@ -1,4 +1,4 @@
-i\documentclass{article}
+\documentclass{article}
 
 \usepackage[final]{neurips_2019}
 
@@ -18,12 +18,12 @@ i\documentclass{article}
 
 \title{
   Predicting Block Copolymer Properties Using Graph Neural Networks \\
-  \vspace{1em}
-  \small{Project Category:} \\
+  %\vspace{1em}
+  %\small{Project Category:} \\
 }
 
 \author{
-  Name: \\
+  Name: Thomas Little\\
   SUNet ID: 06510735\\
   Department of Civil and Environmental Engineering \\
   Stanford University \\
@@ -35,12 +35,6 @@ i\documentclass{article}
   Department of Computer Science \\
   Stanford University \\
   \texttt{name@stanford.edu} \\
-  \And
-  Name: \\
-  SUNet ID: \\
-  Department of Computer Science \\
-  Stanford University \\
-  \texttt{name@stanford.edu}
 }
 
 \begin{document}
@@ -52,23 +46,30 @@ i\documentclass{article}
 % \end{abstract}
 
 
-\note{This template is built on the NeurIPS 2019 template\footnote{\url{https://www.overleaf.com/latex/templates/neurips-2019/tprktwxmqmgk}} and provided for your convenience. Your proposal should include a 300-500 word description of what you plan to do. Presenting pointers to one relevant dataset and one example of prior research on the topic are a valuable (optional) addition.}
+\section{Application Domain}
+Block copolymers are a class of polymer that are composed of two or more distinct monomers chemically joined to create a single molecule. The materials block copolymers form exhibit a wide range of microstructures and properties that make them useful for a variety of applications including materials science, nanotechnology, and biomedical engineering. The study of block copolymers, however, is often limited by the high computational cost of traditional self-consistent field theory simulations. These simulations are valuable tools for the characterization of block copolymers, however, due to their iterative nature it becomes difficult to perform large-scale simulations in a reasonable amount of time.
 
-\section{Key Information to include}
+The goal of this study is to predict the phase behavior of block copolymers using a graph neural network architecture. Recent work has shown the ability of random forest models to closely approximate block copolymer phase behavior with greatly reduced computation time\cite{RandForest}. This approach, however, is not adequately able to capture more geometrically complex copolymer structures, therefore the use of a graph neural network aims to remedy this.
 
-\begin{itemize}
-    \item External collaborators or mentors (if you have any):
-    \item Sharing project with another class:
-\end{itemize}
+There is an open source database of block copolymer phase behavior that was published in 2021 by a research group at MiT\cite{BCDB}. This database has over 5,300 block copolymer melt phase measurements that have been mined from literature and manually curated. This dataset was chosen due to its availability and size. There are few databases that contain such an exhaustive list of block copolymers and their respective properties, especially those that contain the properties needed to calculate phase behavior.
 
-\section{Motivation}
-Provide a clear motivation and build up to your problem statement. What problem are you tackling? Is this an application or a theoretical result?
+The input variables considered in this study will be the block copolymers geometries, which will be represented as a graph, where the nodes are monomers and their respective properties and the connections denote the bonds between these blocks. The previously mentioned database contains these monomers and their properties, along with known copolymer geometries. This information will be used to calculate miscibility using existing methods, specifically, for each copolymer in the dataset the Flory-Huggins parameter and volume fraction will be calculated. These parameters will be used to identify where each copolymer falls on the diblock copolymer phase diagram. These calculations will be considered ground-truth values and the accuracy of the model will be determined by how closely a GNN can replicate these properties. If the model is unable to accurately predict the Flory-Huggins or volume fraction parameters using a regression output, a classification approach can be explored, by changing the output to a multi-class classification and instead identifying which domain of the phase diagram each copolymer exists in.
 
-\section{Methodology}
-What machine learning techniques are you planning to apply or improve upon?
+\section{Graph ML Techniques}
 
-\section{Intended experiments}
-What experiments are you planning to run? How do you plan to evaluate your machine learning algorithm? Here is how to use a reference: \cite{attention_vaswani_17} if you want to include them. Include the references in the references.bib file.
+Similar work has been conducted by the Olsen group at MiT\cite{RandForest} using random forest architectures to predict diblock copolymer phase behavior. The key difference in this approach is the machine learning framework used for prediction. Due to the constraints of input features in forest based approaches, the diblock copolymers were represented using a one-dimensional BigSMILES\cite{BigSMILES} framework of copolymer representation. While this framework is able to abstract block copolymers into an input string suitable for random forest architectures, some of the structure of the block copolymers is lost in this approach. A graph-based model will obviate these abstractions, leading to more accurate representations.
+
+This study will use (((Specify which GNN architecture is suitable)))
+
+\section{Future Work}
+The current proposal is to characterize diblock copolymer phase behavior, with the end goal being to correctly classify diblock copolymers according to the currently accepted existing phase diagram, as seen below. If the task of mapping diblock copolymer phase diagram is achievable, a further improvement will be to look into triblock and n-block copolymer phase diagrams.
+
+\begin{figure}[h]
+\caption{Example of Diblock Copolymer Phase Diagram\cite{RandForest}}
+\centering
+\includegraphics[width=\textwidth]{template/images_large_mz1c00521_0001.jpeg}
+\end{figure}
+
 
 \bibliographystyle{unsrt}
 \bibliography{references}
