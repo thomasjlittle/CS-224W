@@ -13,6 +13,6 @@ look at https://github.com/coleygroup/polymer-chemprop-data/blob/main/datasets/v
 
 also look at https://github.com/olsenlabmit/BigSMILEStoTuples for converting BigSmiles to tuples
 
-QUESTION: how to model edges / are there multiple edge conditions and if so how do I determine?
+
 
 
