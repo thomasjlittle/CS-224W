@@ -23,7 +23,7 @@
 }
 
 \author{
-  Name: \\
+  Name: Thomas Little\\
   SUNet ID: 06510735\\
   Department of Civil and Environmental Engineering \\
   Stanford University \\
@@ -53,7 +53,7 @@ The goal of this study is to predict the phase behavior of block copolymers usin
 
 There is an open source database of block copolymer phase behavior that was published in 2021 by a research group at MiT\cite{BCDB}. This database has over 5,300 block copolymer melt phase measurements that have been mined from literature and manually curated. This dataset was chosen due to its availability and size. There are few databases that contain such an exhaustive list of block copolymers and their respective properties, especially those that contain the properties needed to calculate phase behavior.
 
-The input variables considered in this study will be the block copolymers geometries, which will be represented as a graph, where the nodes are the respective monomers and the connections denote the bonds between these blocks. The previously mentioned database also contains physical properties of copolymers which are used to calculate miscibility using existing methods such as the Flory-Huggins solution theory. These calculations will be considered ground-truth values and the accuracy of the model will be determined by how closely it can replicate these properties.
+The input variables considered in this study will be the block copolymers geometries, which will be represented as a graph, where the nodes are monomers and their respective properties and the connections denote the bonds between these blocks. The previously mentioned database contains these monomers and their properties, along with known copolymer geometries. This information will be used to calculate miscibility using existing methods, specifically, for each copolymer in the dataset the Flory-Huggins parameter and volume fraction will be calculated. These parameters will be used to identify where each copolymer falls on the diblock copolymer phase diagram. These calculations will be considered ground-truth values and the accuracy of the model will be determined by how closely a GNN can replicate these properties. If the model is unable to accurately predict the Flory-Huggins or volume fraction parameters using a regression output, a classification approach can be explored, by changing the output to a multi-class classification and instead identifying which domain of the phase diagram each copolymer exists in.
 
 \section{Graph ML Techniques}
 
@@ -61,8 +61,7 @@ Similar work has been conducted by the Olsen group at MiT\cite{RandForest} using
 
 This study will use (((Specify which GNN architecture is suitable)))
 
-\section{Future Work}
-The current proposal is to characterize diblock copolymer phase behavior, with the end goal being to correctly classify diblock copolymers according to the existing phase diagram, as seen below. If the task of mapping diblock copolymer phase diagram is achievable, a further improvement will be to look into triblock and n-block copolymer phase diagrams.
+The current proposal is to characterize diblock copolymer phase behavior, with the end goal being to correctly classify diblock copolymers according to the currently accepted existing phase diagram, as seen below. If the task of mapping diblock copolymer phase diagram is achievable, a further improvement will be to look into triblock and n-block copolymer phase diagrams.
 
 \begin{figure}[h]
 \caption{Example of Diblock Copolymer Phase Diagram\cite{RandForest}}
