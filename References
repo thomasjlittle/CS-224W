@@ -22,3 +22,12 @@ Mapping binary copolymer property space with neural networks
 A graph representation of molecular ensembles for polymer property prediction
   https://arxiv.org/ftp/arxiv/papers/2205/2205.08619.pdf
   https://github.com/coleygroup/polymer-chemprop
+
+
+
+Block Copolymer Phase Behavior Database (BCDB)
+  https://github.com/olsenlabmit/BCDB
+  
+Random Forest Predictor for Diblock Copolymer Phase Behavior
+  https://pubs.acs.org/doi/full/10.1021/acsmacrolett.1c00521
+  
