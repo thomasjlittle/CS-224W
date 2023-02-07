@@ -24,10 +24,14 @@ A graph representation of molecular ensembles for polymer property prediction
   https://github.com/coleygroup/polymer-chemprop
 
 
+Especially Pertinent:
 
 Block Copolymer Phase Behavior Database (BCDB)
   https://github.com/olsenlabmit/BCDB
   
 Random Forest Predictor for Diblock Copolymer Phase Behavior
   https://pubs.acs.org/doi/full/10.1021/acsmacrolett.1c00521
+  
+Diblock Copolymer Description/Overview
+  https://web.mit.edu/8.334/www/grades/projects/projects10/AlexanderPapageorge/Page6.html
   
