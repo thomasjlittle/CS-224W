@@ -1,0 +1,18 @@
+Workflow:
+
+
+Goal: 
+recreate phase diagram for copolymers using GNN
+
+Database: 
+https://github.com/olsenlabmit/BCDB
+Holds 5300 block copolymer melt phase measurements. Copolymer structure is stored in BigSMILES
+
+use https://www.rdkit.org/docs/source/rdkit.Chem.rdmolfiles.html (specifically .MolFromSmiles to convert from SMILES to usable input maybe?)
+look at https://github.com/coleygroup/polymer-chemprop-data/blob/main/datasets/vipea/make-polymer-fps.py for inspiration
+
+also look at https://github.com/olsenlabmit/BigSMILEStoTuples for converting BigSmiles to tuples
+
+
+
+
