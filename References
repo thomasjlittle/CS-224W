@@ -1,3 +1,17 @@
+------ Especially Pertinent:
+
+Block Copolymer Phase Behavior Database (BCDB)
+  https://github.com/olsenlabmit/BCDB
+  
+Random Forest Predictor for Diblock Copolymer Phase Behavior
+  https://pubs.acs.org/doi/full/10.1021/acsmacrolett.1c00521
+  
+Diblock Copolymer Description/Overview
+  https://web.mit.edu/8.334/www/grades/projects/projects10/AlexanderPapageorge/Page6.html
+  
+
+------ Less Pertinent:
+
 Graph Neural Networks to predict polymer properties:
   https://pubs.rsc.org/en/content/articlelanding/2022/SC/D2SC02839E
   https://github.com/coleygroup/polymer-chemprop-data
@@ -21,17 +35,4 @@ Mapping binary copolymer property space with neural networks
 
 A graph representation of molecular ensembles for polymer property prediction
   https://arxiv.org/ftp/arxiv/papers/2205/2205.08619.pdf
-  https://github.com/coleygroup/polymer-chemprop
-
-
-Especially Pertinent:
-
-Block Copolymer Phase Behavior Database (BCDB)
-  https://github.com/olsenlabmit/BCDB
-  
-Random Forest Predictor for Diblock Copolymer Phase Behavior
-  https://pubs.acs.org/doi/full/10.1021/acsmacrolett.1c00521
-  
-Diblock Copolymer Description/Overview
-  https://web.mit.edu/8.334/www/grades/projects/projects10/AlexanderPapageorge/Page6.html
-  
+  https://github.com/coleygroup/polymer-chemprop 
