@@ -29,12 +29,12 @@
   Stanford University \\
   \texttt{tjlittle@stanford.edu} \\
   % Examples of more authors
-  \And
-  Name: \\
-  SUNet ID: \\
-  Department of Computer Science \\
-  Stanford University \\
-  \texttt{name@stanford.edu} \\
+  %\And
+  %Name: \\
+  %SUNet ID: \\
+  %Department of Computer Science \\
+  %Stanford University \\
+  %\texttt{name@stanford.edu} \\
 }
 
 \begin{document}
@@ -59,9 +59,10 @@ The input variables considered in this study will be the block copolymers geomet
 
 Similar work has been conducted by the Olsen group at MiT\cite{RandForest} using random forest architectures to predict diblock copolymer phase behavior. The key difference in this approach is the machine learning framework used for prediction. Due to the constraints of input features in forest based approaches, the diblock copolymers were represented using a one-dimensional BigSMILES\cite{BigSMILES} framework of copolymer representation. While this framework is able to abstract block copolymers into an input string suitable for random forest architectures, some of the structure of the block copolymers is lost in this approach. A graph-based model will obviate these abstractions, leading to more accurate representations.
 
-This study will use (((Specify which GNN architecture is suitable)))
+This study will use inductive modeling methods to ensure that the model can generalize to unseen copolymer structures. Initial models that will be considered are graph convolutional networks (GCNs) and graph attention networks (GATs) as both of these frameworks are well-suited for capturing relationships between nodes in asymmetric graph structures. A GCN will likely by used as a baseline model to get initial results while the GAT will be implemented for further model refinement if the GCN does not perform well. The GAT will likely have increased performance due to its ability to focus attention on characteristics of the copolymers that may have significant impact on phase behavior. These two specific network frameworks were chosen because they are capable of handling very asymmetric graphs, which is fitting for copolymers as their chain structures can become very long with minimal branching.
 
-The current proposal is to characterize diblock copolymer phase behavior, with the end goal being to correctly classify diblock copolymers according to the currently accepted existing phase diagram, as seen below. If the task of mapping diblock copolymer phase diagram is achievable, a further improvement will be to look into triblock and n-block copolymer phase diagrams.
+ \section{Conclusion}
+The current proposal is to characterize diblock copolymer phase behavior, with the end goal being to correctly predict and classify diblock copolymers phase behavior according to the currently accepted phase diagram, as seen below. If the task of mapping diblock copolymers according to their phase diagram is achievable, a further improvement will be to look into triblock and n-block copolymer phase prediction and classification.
 
 \begin{figure}[h]
 \caption{Example of Diblock Copolymer Phase Diagram\cite{RandForest}}
