@@ -36,3 +36,7 @@ Mapping binary copolymer property space with neural networks
 A graph representation of molecular ensembles for polymer property prediction
   https://arxiv.org/ftp/arxiv/papers/2205/2205.08619.pdf
   https://github.com/coleygroup/polymer-chemprop 
+  
+On the equivalence of molecular graph convolution and molecular wave function with poor basis set
+  https://proceedings.neurips.cc/paper/2020/hash/1534b76d325a8f591b52d302e7181331-Abstract.html
+  https://github.com/masashitsubaki/molecularGNN_smiles
