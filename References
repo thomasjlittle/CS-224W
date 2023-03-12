@@ -9,6 +9,9 @@ Random Forest Predictor for Diblock Copolymer Phase Behavior
 Diblock Copolymer Description/Overview
   https://web.mit.edu/8.334/www/grades/projects/projects10/AlexanderPapageorge/Page6.html
   
+Graph neural network (GNN) for molecular property prediction (SMILES format)
+  https://github.com/masashitsubaki/molecularGNN_smiles
+  
 
 ------ Less Pertinent:
 
@@ -43,3 +46,7 @@ On the equivalence of molecular graph convolution and molecular wave function wi
   
 BigSMILES Description
   https://olsenlabmit.github.io/BigSMILES/docs/line_notation.html#stochastic-object
+
+On the equivalence of molecular graph convolution and molecular wave function with poor basis set
+  https://proceedings.neurips.cc/paper/2020/hash/1534b76d325a8f591b52d302e7181331-Abstract.html
+  
