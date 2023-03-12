@@ -1,5 +1,5 @@
 Workflow:
-split dataset
+Split dataset into train/test/dev
 Convert all BigSMILES strings to SMILES
 Convert all SMILES strings into graphs using existing code
   - Add features to all BigSMILES nodes indicating they are blocks
