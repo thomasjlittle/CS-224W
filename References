@@ -40,3 +40,6 @@ A graph representation of molecular ensembles for polymer property prediction
 On the equivalence of molecular graph convolution and molecular wave function with poor basis set
   https://proceedings.neurips.cc/paper/2020/hash/1534b76d325a8f591b52d302e7181331-Abstract.html
   https://github.com/masashitsubaki/molecularGNN_smiles
+  
+BigSMILES Description
+  https://olsenlabmit.github.io/BigSMILES/docs/line_notation.html#stochastic-object
