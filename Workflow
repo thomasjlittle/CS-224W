@@ -1,5 +1,9 @@
 Workflow:
-
+Convert all BigSMILES strings to SMILES
+Convert all SMILES strings into graphs using existing code
+  - Add features to all BigSMILES nodes indicating they are blocks
+  - Add Mn, T, f_A features to graph
+Run GAT/GCN for classification
 
 Goal: 
 recreate phase diagram for copolymers using GNN
