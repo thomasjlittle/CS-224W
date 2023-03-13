@@ -12,6 +12,9 @@ Diblock Copolymer Description/Overview
 Graph neural network (GNN) for molecular property prediction (SMILES format)
   https://github.com/masashitsubaki/molecularGNN_smiles
   
+How to turn a SMILES string into a molecular graph for Pytorch Geometric
+  https://www.blopig.com/blog/2022/02/how-to-turn-a-smiles-string-into-a-molecular-graph-for-pytorch-geometric/
+  
 
 ------ Less Pertinent:
 
