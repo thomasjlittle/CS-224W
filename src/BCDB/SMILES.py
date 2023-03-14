@@ -11,7 +11,7 @@ from collections import deque
 
 import matplotlib.pyplot as plt
 import networkx as nx
-from .error import (
+from error import (
     AtomicWeightError,
     HcountChiralError,
     MultiBondError,
@@ -20,8 +20,8 @@ from .error import (
     SelfLoopError,
     SmilesError,
 )
-from .SmilesPattern import SmilesPattern
-from .utility import disjoint_union, errorMsg, getIdStr
+from SmilesPattern import SmilesPattern
+from utility import disjoint_union, errorMsg, getIdStr
 
 
 class SMILES:

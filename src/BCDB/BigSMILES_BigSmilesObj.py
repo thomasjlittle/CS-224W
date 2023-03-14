@@ -8,17 +8,17 @@ Created on Thu Aug 15 12:15:46 2019
 from collections import deque
 
 import networkx as nx
-from .BigSMILES_Bond import BigSMILES_Bond
-from .BigSMILES_StoObj import BigSMILES_StoObj
-from .BigSmilesPattern import BigSmilesPattern
-from .error import (
+from BigSMILES_Bond import BigSMILES_Bond
+from BigSMILES_StoObj import BigSMILES_StoObj
+from BigSmilesPattern import BigSmilesPattern
+from error import (
     BigSMILES_BondInconsistencyError,
     BigSMILES_StoObjError,
     BigSMILES_StoObjMissingTerminalError,
     BigSMILESError,
 )
-from .SMILES import SMILES
-from .utility import errorMsg, flatten_list
+from SMILES import SMILES
+from utility import errorMsg, flatten_list
 
 
 class BigSMILES(SMILES):

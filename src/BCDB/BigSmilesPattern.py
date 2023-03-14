@@ -5,7 +5,7 @@ Created on Mon Aug 12 17:02:36 2019
 @author: tslin
 """
 
-from .SmilesPattern import SmilesPattern
+from SmilesPattern import SmilesPattern
 from pyparsing import (
     Word,
     Literal,
@@ -16,7 +16,7 @@ from pyparsing import (
     printables,
     alphanums,
 )
-from .utility import flatten_list
+from utility import flatten_list
 
 
 class BigSmilesPattern(SmilesPattern):

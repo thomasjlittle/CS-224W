@@ -4,7 +4,7 @@ Created on Thu Aug 15 14:08:58 2019
 
 @author: tslin
 """
-from .error import BigSMILES_BondInconsistencyError
+from error import BigSMILES_BondInconsistencyError
 
 
 class BigSMILES_Bond:

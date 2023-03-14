@@ -5,12 +5,12 @@ Created on Mon Aug 26 15:43:33 2019
 @author: tslin
 """
 
-from .BigSmilesPattern import BigSmilesPattern
+from BigSmilesPattern import BigSmilesPattern
 
 # from BigSmiles import BigSMILES
-from .utility import errorMsg
-from .BigSMILES_Bond import BigSMILES_Bond
-from .error import BigSMILES_StoObjError, BigSMILES_BondInconsistencyError
+from utility import errorMsg
+from BigSMILES_Bond import BigSMILES_Bond
+from error import BigSMILES_StoObjError, BigSMILES_BondInconsistencyError
 
 # import networkx as nx
 
