@@ -1,10 +1,13 @@
 Workflow:
-Split dataset into train/test/dev
-Convert all BigSMILES strings to SMILES
-Convert all SMILES strings into graphs using existing code
-  - Add features to all BigSMILES nodes indicating they are blocks
+Split dataset into train/test/dev --> [Done in data_preprocessors.py]
+Convert all BigSMILES strings to SMILES --> [Done in  data_preprocessors.py]
+Convert all SMILES strings into graphs using existing code --> [Started in  data_preprocessors.py]
+  - Add features to all BigSMILES nodes indicating they are blocks --> [Done]
+  - Convert graphs to DeepSNAP graphs
   - Add Mn, T, f_A features to graph
 Run GAT/GCN for classification
+
+
 
 Goal: 
 recreate phase diagram for copolymers using GNN
