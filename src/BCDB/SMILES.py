@@ -27,7 +27,13 @@ from utility import disjoint_union, errorMsg, getIdStr
 class SMILES:
     _count = 0
 
-    def __init__(self, inStr="", inGraph=None, pattern=SmilesPattern._smilesElement):
+    def __init__(
+        self,
+        inStr="",
+        inGraph=None,
+        pattern=SmilesPattern._smilesElement,
+        functional_group_indices=None,
+    ):
         self.parsed = False
         self.pattern = pattern
         if inGraph == None:
@@ -53,6 +59,11 @@ class SMILES:
         SMILES._count = SMILES._count + 1
         self.MolID = SMILES._count
         self.components = list()
+
+        # Add a new attribute for functional_group_indices
+        self.functional_group_indices = (
+            functional_group_indices if functional_group_indices is not None else set()
+        )
 
     def parseBranch(self, res, prevAtom, level, pos):
         self.parse(root=prevAtom, level=level + 1, inStr=res.rawStr[1:-1], base_pos=pos + 1)
@@ -130,7 +141,18 @@ class SMILES:
             # G.add_edge(prevAtom,phantomLoopNodeIdx)
             self.G.nodes[prevAtom]["neighList"].append(-1 * parsedLoopId)
 
-    def createNode(self, rawStr, _type, symbol, pos, chiral="", isotope="", charge="", _class=""):
+    def createNode(
+        self,
+        rawStr,
+        _type,
+        symbol,
+        pos,
+        chiral="",
+        isotope="",
+        charge="",
+        _class="",
+        in_functional_group=0,
+    ):
         self.atomCount = self.atomCount + 1
         nodeId = self.atomCount
         self.G.add_node((nodeId))
@@ -144,6 +166,7 @@ class SMILES:
         self.G.nodes[nodeId]["isotope"] = isotope
         self.G.nodes[nodeId]["charge"] = charge
         self.G.nodes[nodeId]["_class"] = _class
+        self.G.nodes[nodeId]["in_functional_group"] = in_functional_group
         return nodeId
 
     def createEdge(self, node1, node2, bond):
@@ -606,6 +629,12 @@ class SMILES:
                 self.components.append(g)
 
             self.parsed = True
+
+        for node in self.G.nodes():
+            self.G.nodes[node]["in_functional_group"] = (
+                1 if node in self.functional_group_indices else 0
+            )
+
         return self.G
 
     def swapBranch(self, swapStart, thisAtom, swapList, condition):
@@ -835,8 +864,8 @@ class SMILES:
         # print(self.T.edges())
 
         smilesStr = self.writeComponents(base)
-        # return smilesStr,self.G,self.T
-        return smilesStr
+        return smilesStr, self.G, self.T
+        # return smilesStr
 
     def draw(self):
         colorDict = {  # CPK color code
@@ -996,7 +1025,7 @@ if __name__ == "__main__":
     # valency only checked for carbons with specified chirality and allenic carbons
 
     # s = testStr.split()
-    testSMILES = SMILES(testStr)
+    testSMILES = SMILES("CC(c1ccccc1)[Si](C)(C)O")
     G = testSMILES.parse()
     s, G, T = testSMILES.write()
     print(s)
