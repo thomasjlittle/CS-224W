@@ -5,6 +5,11 @@ import random
 import torch
 import sys
 import os
+import torch
+import torch_geometric
+import networkx as nx
+from deepsnap.hetero_graph import HeteroGraph
+import matplotlib.pyplot as plt
 
 sys.path.append(os.getcwd() + "/src/BCDB")
 from SMILES import SMILES
@@ -19,6 +24,28 @@ PHASES = {
     "PL": 5,
     "sphere": 6,
 }
+
+ATOMS = {
+    "C": 0,
+    "N": 1,
+    "O": 2,
+    "S": 3,
+    "Si": 4,
+    "c": 5,
+    "n": 6,
+    "o": 7,
+    "s": 8,
+    "si": 9,
+    "Unknown": 10,
+}
+
+BONDS = {
+    "": 0,
+    "=": 1,
+    "\\": 2,
+    "/": 3,
+}
+
 # PHASES_ONEHOT = torch.nn.functional.one_hot(torch.arange(0, len(PHASES)), num_classes=-1)
 
 
@@ -286,6 +313,67 @@ def create_pytorch_geometric_graph_data_list_from_smiles_and_labels(x_smiles, y)
 ################################################### End Maybe Unused #####################################################
 
 
+# Convert to DeepSNAP Heterogeneous Graph
+
+
+def set_graph_attrs(G, data, idx):
+    """
+    node_type = (str) atom name
+    node_label = (int) representation of atom
+    node_feature = (torch.tensor) list of [in_function_group, volume_fraction]
+    edge_type = (str) name of bond
+    edge_feature = (torch.tensor) list of [bond type (represented as int)]
+    graph_feature =
+    graph_label =
+    """
+
+    # Node Level Features
+    # Generate Node Level Features
+    node_types = {node: G._node[node]["atom"] for node in G.nodes()}
+    node_labels = {node: ATOMS[node_types[node]] for node in G.nodes()}
+    node_features = {
+        node: torch.tensor([G._node[node]["in_functional_group"], data["f1"][idx]])
+        for node in G.nodes()
+    }
+
+    # Clear unnecesary node atributes
+    for n, d in G.nodes(data=True):
+        d.clear()
+
+    # Set Node Level Features
+    nx.set_node_attributes(G, node_types, "node_type")
+    nx.set_node_attributes(G, node_labels, "node_label")
+    nx.set_node_attributes(G, node_features, "node_feature")
+
+    # Node Level Features
+    # First get dictionary of edge types:
+    edge_dict = {}
+    for i, inner_dict in G.edges()._adjdict.items():
+        for j, properties in inner_dict.items():
+            edge_dict[(i, j)] = properties["type"]
+        edge_types = {}
+
+    # Clear unnecessary edge attributes
+    for n1, n2, d in G.edges(data=True):
+        d.clear()
+
+    # Now set edge types
+    for edge in G.edges():
+        edge_types[edge] = BONDS[edge_dict[edge]]
+    nx.set_edge_attributes(G, edge_types, "edge_type")
+
+    # Set Graph Level Features
+    graph_feature = torch.tensor(data["Mn"][idx])
+
+    # Visualize Graph
+    # labels = nx.get_node_attributes(G, "node_type")
+    # nx.draw(G, cmap=plt.get_cmap("coolwarm"), labels=labels)
+
+    G_hete = HeteroGraph(G)
+
+    return G_hete
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset_path", type=str, default="data/diblock.csv")
@@ -305,9 +393,12 @@ if __name__ == "__main__":
     # Convert smiles into graphs and labels
     smiles_obj = [SMILES(smile) for smile in smiles]
     smiles_graphs = [obj.parse() for obj in smiles_obj]
-    # graphs = create_pytorch_geometric_graph_data_list_from_smiles_and_labels(smiles, labels)
     labels = [PHASES[label] for label in data["phase1"]]
+    # graphs = create_pytorch_geometric_graph_data_list_from_smiles_and_labels(smiles, labels)
 
     # Label functional groups
     graphs = label_fxn_groups(BigSmiles, smiles_graphs)
+    G_hete = []
+    for idx, graph in enumerate(graphs):
+        G_hete.append = set_graph_attrs(graph, train, idx)
     print("To be completed ..")
