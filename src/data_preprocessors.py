@@ -10,6 +10,7 @@ import torch_geometric
 import networkx as nx
 from deepsnap.hetero_graph import HeteroGraph
 import matplotlib.pyplot as plt
+import deep_graphgym
 
 sys.path.append(os.getcwd() + "/src/BCDB")
 from SMILES import SMILES
@@ -230,11 +231,20 @@ if __name__ == "__main__":
         smiles_obj = [SMILES(smile) for smile in smiles]
         smiles_graphs = [obj.parse() for obj in smiles_obj]
         labels = [PHASES[label] for label in split["phase1"]]
-
         # Label functional groups
         graphs = label_fxn_groups(BigSmiles, smiles_graphs)
         G_hete = []
         for idx, graph in enumerate(graphs):
             G_hete_graph = set_graph_attrs(graph, split, idx)
             G_hete.append(G_hete_graph)
+            break
         graphs.append(G_hete)
+
+    print(graphs[0])
+    train_graphs = graphs[0] 
+    dev_graphs = graphs[1]
+    test_graphs = graphs[2]
+
+    deep_graphgym.run_defined_experiments(train_graphs)
+    deep_graphgym.run_defined_experiments(dev_graphs)
+    deep_graphgym.run_defined_experiments(test_graphs)
