@@ -1,4 +1,5 @@
 import pandas as pd
+from heteroGNN import HeteroGNN
 
 def train(model, optimizer, hetero_graph, train_idx):
     model.train()
