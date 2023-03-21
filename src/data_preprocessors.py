@@ -104,15 +104,31 @@ def BigSMILES_to_SMILES(input_strs):
 def label_fxn_groups(bigsmiles, graphs):
     # Since functional groups are always at polymer ends in SMILES, find number of graph nodes
     # before and after polymer blocks and label all nodes in those ranges as functional groups
+
+    # Labels:
+    # 0 = in polymer B block
+    # 1 = in functional group
+    # 2 = in polymer A block
+
     for bigsmile, graph in zip(bigsmiles, graphs):
         node_idx = 1
+
+        # Label nodes in left functional group
+        start = bigsmile.find("{")
         if bigsmile[0] != "{":
-            start = bigsmile.find("{")
             for idx in range(start):
                 if bigsmile[idx].isalpha():
                     graph._node[node_idx]["in_functional_group"] = 1
                     node_idx += 1
 
+        # Label nodes in polymer A block
+        end_A_block = bigsmile.find("}")
+        for idx in range(start + 1, end_A_block):
+            if bigsmile[idx].isalpha():
+                graph._node[node_idx]["in_functional_group"] = 2
+                node_idx += 1
+
+        # Label nodes in right functional group
         node_idx = len(graph._node)
         if bigsmile[-1] != "}":
             end = bigsmile.rfind("}")
@@ -332,7 +348,11 @@ def set_graph_attrs(G, data, idx):
     node_types = {node: G._node[node]["atom"] for node in G.nodes()}
     node_labels = {node: ATOMS[node_types[node]] for node in G.nodes()}
     node_features = {
-        node: torch.tensor([G._node[node]["in_functional_group"], data["f1"][idx]])
+        node: torch.tensor([G._node[node]["in_functional_group"], 1 - data["f1"][idx]])
+        if G._node[node]["in_functional_group"] == 0
+        else torch.tensor([G._node[node]["in_functional_group"], 0])
+        if G._node[node]["in_functional_group"] == 1
+        else torch.tensor([G._node[node]["in_functional_group"], data["f1"][idx]])
         for node in G.nodes()
     }
 
@@ -387,9 +407,6 @@ if __name__ == "__main__":
     BigSmiles = train["BigSMILES"]
     smiles = BigSMILES_to_SMILES(BigSmiles)
 
-    # Remove unsupported polymers
-    smiles = [smile for smile in smiles if all(x not in smile for x in ["sn", "Sn"])]
-
     # Convert smiles into graphs and labels
     smiles_obj = [SMILES(smile) for smile in smiles]
     smiles_graphs = [obj.parse() for obj in smiles_obj]
@@ -400,5 +417,5 @@ if __name__ == "__main__":
     graphs = label_fxn_groups(BigSmiles, smiles_graphs)
     G_hete = []
     for idx, graph in enumerate(graphs):
-        G_hete.append = set_graph_attrs(graph, train, idx)
+        G_hete.append(set_graph_attrs(graph, train, idx))
     print("To be completed ..")
