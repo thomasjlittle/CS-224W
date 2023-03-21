@@ -7,6 +7,9 @@ Convert all SMILES strings into graphs using existing code --> [Started in  data
   - Add Mn, T, f_A features to graph --> [Done]
 Run GAT/GCN for classification
 
+Blog Link:
+https://medium.com/@littlethomas98/block-copolymer-phase-prediction-using-graph-neural-network-architectures-3ebec4f6c310
+
 
 
 Goal: 
