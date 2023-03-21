@@ -221,7 +221,9 @@ if __name__ == "__main__":
     data = load_data(args)
     train, dev, test = split_data(data)
 
-    graphs = []
+    label_splits = []
+    new_graphs = []
+
     for split in [train, dev, test]:
         # Extract BigSMILES and SMILES strings
         BigSmiles = split["BigSMILES"]
@@ -231,9 +233,11 @@ if __name__ == "__main__":
         smiles_obj = [SMILES(smile) for smile in smiles]
         smiles_graphs = [obj.parse() for obj in smiles_obj]
         labels = [PHASES[label] for label in split["phase1"]]
+
+        label_splits.append(labels)
         # Label functional groups
         graphs = label_fxn_groups(BigSmiles, smiles_graphs)
-        new_graphs = []
+
         G_hete = []
         for idx, graph in enumerate(graphs):
             G_hete_graph = set_graph_attrs(graph, split, idx)
@@ -244,6 +248,10 @@ if __name__ == "__main__":
     train_graphs = new_graphs[0] 
     dev_graphs = new_graphs[1]
     test_graphs = new_graphs[2]
+
+    train_labels = label_splits[0]
+    dev_labels = label_splits[1]
+    test_labels = label_splits[2]
 
     # deep_graphgym.run_defined_experiments(train_graphs)
     # deep_graphgym.run_defined_experiments(dev_graphs)
