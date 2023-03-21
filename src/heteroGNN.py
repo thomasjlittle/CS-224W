@@ -15,31 +15,32 @@ class HeteroGNN(torch.nn.Module):
     def __init__(self, hetero_graph, args, aggr="mean"):
     	super(HeteroGNN, self).__init__()
 
-        self.aggr = aggr
-        self.hidden_size = args['hidden_size']
+    	self.aggr = aggr
+    	self.hidden_size = args['hidden_size']
 
-        self.bns1 = nn.ModuleDict()
-        self.bns2 = nn.ModuleDict()
-        self.relus1 = nn.ModuleDict()
-        self.relus2 = nn.ModuleDict()
-        self.post_mps = nn.ModuleDict()
-
-        convs1 = generate_convs(hetero_graph=hetero_graph, conv=HeteroGNNConv, hidden_size=self.hidden_size, first_layer=True)
-        self.convs1 = HeteroGNNWrapperConv(convs=convs1, args=args, aggr=self.aggr)
-        convs2 = generate_convs(hetero_graph=hetero_graph, conv=HeteroGNNConv, hidden_size=self.hidden_size, first_layer=False)
-        self.convs2 = HeteroGNNWrapperConv(convs=convs2, args=args, aggr=self.aggr)
-
-        for node_type in hetero_graph.node_types:
-			self.bns1[node_type] = torch.nn.BatchNorm1d(self.hidden_size, eps=1)
-			self.bns2[node_type] = torch.nn.BatchNorm1d(self.hidden_size, eps=1)
-			self.relus1[node_type] = nn.LeakyReLU()
-			self.relus2[node_type] = nn.LeakyReLU()
-
-			self.post_mps[node_type] = nn.Linear(self.hidden_size, hetero_graph.num_node_labels(node_type))
-
-
+    	self.bns1 = nn.ModuleDict()
+    	self.bns2 = nn.ModuleDict()
+    	self.relus1 = nn.ModuleDict()
+    	self.relus2 = nn.ModuleDict()
+    	self.post_mps = nn.ModuleDict()
+    	
+    	convs1 = generate_convs(hetero_graph=hetero_graph, conv=HeteroGNNConv, hidden_size=self.hidden_size, first_layer=True)
+    	self.convs1 = HeteroGNNWrapperConv(convs=convs1, args=args, aggr=self.aggr)
+    	convs2 = generate_convs(hetero_graph=hetero_graph, conv=HeteroGNNConv, hidden_size=self.hidden_size, first_layer=False)
+    	self.convs2 = HeteroGNNWrapperConv(convs=convs2, args=args, aggr=self.aggr)
+    	
+    	for node_type in hetero_graph.node_types:
+    	    self.bns1[node_type] = torch.nn.BatchNorm1d(self.hidden_size, eps=1)
+    	    self.bns2[node_type] = torch.nn.BatchNorm1d(self.hidden_size, eps=1)
+    	    self.relus1[node_type] = nn.LeakyReLU()
+    	    self.relus2[node_type] = nn.LeakyReLU()
+    	    
+    	    self.post_mps[node_type] = nn.Linear(self.hidden_size, hetero_graph.num_node_labels(node_type))
+    	    
     def forward(self, node_feature, edge_index):
         x = self.convs1(x, edge_index)
+
+        
         x = forward_op(x, self.bns1)
         x = forward_op(x, self.relus1)
         x = self.convs2(x, edge_index)
@@ -54,8 +55,8 @@ class HeteroGNN(torch.nn.Module):
         loss_func = F.cross_entropy
 
         for node_type in preds:
-			prediction = preds[node_type][indices[node_type]]
-			loss += loss_func(prediction, y[node_type][indices[node_type]])
+        	prediction = preds[node_type][indices[node_type]]
+        	loss += loss_func(prediction, y[node_type][indices[node_type]])
 
         return loss
 
@@ -171,16 +172,16 @@ class HeteroGNNWrapperConv(deepsnap.hetero_gnn.HeteroConv):
             return x.sum(dim=0)
 
 def generate_convs(hetero_graph, conv, hidden_size, first_layer=False):
-    convs = {}
+	convs = {}
 
-    for message_type in hetero_graph.message_types:
-    	if first_layer:
-	        src_node = message_type[0]
-	        dst_node = message_type[2]
-	        in_channel_src = hetero_graph.num_node_features(src_node)
-	        in_channel_dst = hetero_graph.num_node_features(dst_node)
-	        convs[message_type] = conv(in_channels_src=in_channel_src, in_channels_dst=in_channel_dst, out_channels=hidden_size)
-	    else:
-        	convs[message_type] = conv(in_channels_src=hidden_size, in_channels_dst=hidden_size, out_channels=hidden_size)
+	for message_type in hetero_graph.message_types:
+		if first_layer:
+			src_node = message_type[0]
+			dst_node = message_type[2]
+			in_channel_src = hetero_graph.num_node_features(src_node)
+			in_channel_dst = hetero_graph.num_node_features(dst_node)
+			convs[message_type] = conv(in_channels_src=in_channel_src, in_channels_dst=in_channel_dst, out_channels=hidden_size)
+		else:
+			convs[message_type] = conv(in_channels_src=hidden_size, in_channels_dst=hidden_size, out_channels=hidden_size)
 
-    return convs
+	return convs

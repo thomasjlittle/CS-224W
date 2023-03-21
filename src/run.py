@@ -1,4 +1,5 @@
 import pandas as pd
+import torch
 from heteroGNN import HeteroGNN
 
 def train(model, optimizer, hetero_graph, train_idx):
@@ -63,40 +64,35 @@ def run_train_test(train, dev, test, train_labels, dev_labels, test_labels):
 
     print("Device: {}".format(args['device']))
 
-    # Load the data
-    data = torch.load("acm.pkl")
+    # # Message types
+    # message_type_1 = ("paper", "author", "paper")
+    # message_type_2 = ("paper", "subject", "paper")
 
-    print(data)
+    # # Dictionary of edge indices
+    # edge_index = {}
+    # edge_index[message_type_1] = data['pap']
+    # edge_index[message_type_2] = data['psp']
 
-    # Message types
-    message_type_1 = ("paper", "author", "paper")
-    message_type_2 = ("paper", "subject", "paper")
+    # # Dictionary of node features
+    # node_feature = {}
+    # node_feature["paper"] = data['feature']
 
-    # Dictionary of edge indices
-    edge_index = {}
-    edge_index[message_type_1] = data['pap']
-    edge_index[message_type_2] = data['psp']
+    # # Dictionary of node labels
+    # node_label = {}
+    # node_label["paper"] = data['label']
 
-    # Dictionary of node features
-    node_feature = {}
-    node_feature["paper"] = data['feature']
+    # # Load the train, validation and test indices
+    # train_idx = {"paper": data['train_idx'].to(args['device'])}
+    # val_idx = {"paper": data['val_idx'].to(args['device'])}
+    # test_idx = {"paper": data['test_idx'].to(args['device'])}
 
-    # Dictionary of node labels
-    node_label = {}
-    node_label["paper"] = data['label']
-
-    # Load the train, validation and test indices
-    train_idx = {"paper": data['train_idx'].to(args['device'])}
-    val_idx = {"paper": data['val_idx'].to(args['device'])}
-    test_idx = {"paper": data['test_idx'].to(args['device'])}
-
-    # Construct a deepsnap tensor backend HeteroGraph
-    hetero_graph = HeteroGraph(
-      node_feature=node_feature,
-      node_label=node_label,
-      edge_index=edge_index,
-      directed=True
-    )
+    # # Construct a deepsnap tensor backend HeteroGraph
+    # hetero_graph = HeteroGraph(
+    #   node_feature=node_feature,
+    #   node_label=node_label,
+    #   edge_index=edge_index,
+    #   directed=True
+    # )
 
     print(f"ACM heterogeneous graph: {hetero_graph.num_nodes()} nodes, {hetero_graph.num_edges()} edges")
 

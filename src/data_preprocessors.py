@@ -10,7 +10,7 @@ import torch_geometric
 import networkx as nx
 from deepsnap.hetero_graph import HeteroGraph
 import matplotlib.pyplot as plt
-# import run
+import run
 
 sys.path.append(os.getcwd() + "/src/BCDB")
 from SMILES import SMILES
