@@ -3,8 +3,8 @@ Split dataset into train/test/dev --> [Done in data_preprocessors.py]
 Convert all BigSMILES strings to SMILES --> [Done in  data_preprocessors.py]
 Convert all SMILES strings into graphs using existing code --> [Started in  data_preprocessors.py]
   - Add features to all BigSMILES nodes indicating they are blocks --> [Done]
-  - Convert graphs to DeepSNAP graphs
-  - Add Mn, T, f_A features to graph
+  - Convert graphs to DeepSNAP graphs --> [Done]
+  - Add Mn, T, f_A features to graph --> [Done]
 Run GAT/GCN for classification
 
 

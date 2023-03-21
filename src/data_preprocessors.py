@@ -233,18 +233,18 @@ if __name__ == "__main__":
         labels = [PHASES[label] for label in split["phase1"]]
         # Label functional groups
         graphs = label_fxn_groups(BigSmiles, smiles_graphs)
+        new_graphs = []
         G_hete = []
         for idx, graph in enumerate(graphs):
             G_hete_graph = set_graph_attrs(graph, split, idx)
             G_hete.append(G_hete_graph)
             break
-        graphs.append(G_hete)
+        new_graphs.append(G_hete)
 
-    print(graphs[0])
-    train_graphs = graphs[0] 
-    dev_graphs = graphs[1]
-    test_graphs = graphs[2]
+    train_graphs = new_graphs[0] 
+    dev_graphs = new_graphs[1]
+    test_graphs = new_graphs[2]
 
-    deep_graphgym.run_defined_experiments(train_graphs)
-    deep_graphgym.run_defined_experiments(dev_graphs)
-    deep_graphgym.run_defined_experiments(test_graphs)
+    # deep_graphgym.run_defined_experiments(train_graphs)
+    # deep_graphgym.run_defined_experiments(dev_graphs)
+    # deep_graphgym.run_defined_experiments(test_graphs)

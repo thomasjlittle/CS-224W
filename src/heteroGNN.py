@@ -18,9 +18,6 @@ class HeteroGNN(torch.nn.Module):
         self.aggr = aggr
         self.hidden_size = args['hidden_size']
 
-        self.convs1 = None
-        self.convs2 = None
-
         self.bns1 = nn.ModuleDict()
         self.bns2 = nn.ModuleDict()
         self.relus1 = nn.ModuleDict()
@@ -69,11 +66,6 @@ class HeteroGNNConv(pyg_nn.MessagePassing):
         self.in_channels_src = in_channels_src
         self.in_channels_dst = in_channels_dst
         self.out_channels = out_channels
-
-        self.lin_dst = None
-        self.lin_src = None
-
-        self.lin_update = None
 
         self.lin_dst = nn.Linear(self.in_channels_dst, self.out_channels)
         self.lin_src = nn.Linear(self.in_channels_src, self.out_channels)
