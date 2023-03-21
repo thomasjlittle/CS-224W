@@ -164,9 +164,9 @@ def set_graph_attrs(G, data, idx):
     node_features = {
         node: torch.tensor([G._node[node]["in_functional_group"], 1 - data["f1"][idx]])
         if G._node[node]["in_functional_group"] == 0
-        else torch.tensor([G._node[node]["in_functional_group"], 0])
+        else torch.tensor([G._node[node]["in_functional_group"], 0], device=device)
         if G._node[node]["in_functional_group"] == 1
-        else torch.tensor([G._node[node]["in_functional_group"], data["f1"][idx]])
+        else torch.tensor([G._node[node]["in_functional_group"], data["f1"][idx]], device=device)
         for node in G.nodes()
     }
 
@@ -220,8 +220,8 @@ def set_graph_attrs(G, data, idx):
     G_hete = HeteroGraph(G, edge_index=edge_index)
 
     # Set Graph Level Features
-    graph_feature = torch.tensor([data["T"][idx], data["Mn"][idx]])
-    graph_label = torch.tensor(data["ID"][idx])
+    graph_feature = torch.tensor([data["T"][idx], data["Mn"][idx]], device=device)
+    graph_label = torch.tensor(data["ID"][idx], device=device)
     G_hete.graph_feature = graph_feature
     G_hete.graph_label = graph_label
 
