@@ -31,12 +31,14 @@ ATOMS = {
     "O": 2,
     "S": 3,
     "Si": 4,
-    "c": 5,
-    "n": 6,
-    "o": 7,
-    "s": 8,
-    "si": 9,
-    "Unknown": 10,
+    "H": 5,
+    "c": 6,
+    "n": 7,
+    "o": 8,
+    "s": 9,
+    "si": 10,
+    "h": 11,
+    "Unknown": 12,
 }
 
 BONDS = {
@@ -53,7 +55,7 @@ def load_data(args):
     raw_dataset = load_dataset(path="csv", data_files=args.dataset_path, split="train")
 
     # Filter unnecesary columns out of dataset
-    cols_included = set(["phase1", "phase2", "T", "BigSMILES", "Mn", "f1"])
+    cols_included = set(["ID", "phase1", "phase2", "T", "BigSMILES", "Mn", "f1"])
     cols_excluded = set(raw_dataset.column_names) - cols_included
     dataset = raw_dataset.remove_columns(cols_excluded)
 
@@ -139,6 +141,7 @@ def label_fxn_groups(bigsmiles, graphs):
 
     return graphs
 
+
 # Convert to DeepSNAP Heterogeneous Graph
 
 
@@ -192,14 +195,18 @@ def set_graph_attrs(G, data, idx):
         edge_types[edge] = BONDS[edge_dict[edge]]
     nx.set_edge_attributes(G, edge_types, "edge_type")
 
+    # Convert Graph to DeepSNAP Heterogeneous Graph
+    G_hete = HeteroGraph(G)
+
     # Set Graph Level Features
-    graph_feature = torch.tensor(data["Mn"][idx])
+    graph_feature = torch.tensor([data["T"][idx], data["Mn"][idx]])
+    graph_label = torch.tensor(data["ID"][idx])
+    G_hete.graph_feature = graph_feature
+    G_hete.graph_label = graph_label
 
     # Visualize Graph
     # labels = nx.get_node_attributes(G, "node_type")
     # nx.draw(G, cmap=plt.get_cmap("coolwarm"), labels=labels)
-
-    G_hete = HeteroGraph(G)
 
     return G_hete
 
@@ -213,20 +220,21 @@ if __name__ == "__main__":
     data = load_data(args)
     train, dev, test = split_data(data)
 
-    # Extract BigSMILES and SMILES strings
-    BigSmiles = train["BigSMILES"]
-    smiles = BigSMILES_to_SMILES(BigSmiles)
+    graphs = []
+    for split in [train, dev, test]:
+        # Extract BigSMILES and SMILES strings
+        BigSmiles = split["BigSMILES"]
+        smiles = BigSMILES_to_SMILES(BigSmiles)
 
-    # Convert smiles into graphs and labels
-    smiles_obj = [SMILES(smile) for smile in smiles]
-    smiles_graphs = [obj.parse() for obj in smiles_obj]
-    labels = [PHASES[label] for label in data["phase1"]]
-    # graphs = create_pytorch_geometric_graph_data_list_from_smiles_and_labels(smiles, labels)
+        # Convert smiles into graphs and labels
+        smiles_obj = [SMILES(smile) for smile in smiles]
+        smiles_graphs = [obj.parse() for obj in smiles_obj]
+        labels = [PHASES[label] for label in split["phase1"]]
 
-    # Label functional groups
-    graphs = label_fxn_groups(BigSmiles, smiles_graphs)
-    G_hete = []
-    for idx, graph in enumerate(graphs):
-        G_hete_graph = set_graph_attrs(graph, train, idx)
-        G_hete.append(G_hete_graph)
-    print("To be completed ..")
+        # Label functional groups
+        graphs = label_fxn_groups(BigSmiles, smiles_graphs)
+        G_hete = []
+        for idx, graph in enumerate(graphs):
+            G_hete_graph = set_graph_attrs(graph, split, idx)
+            G_hete.append(G_hete_graph)
+        graphs.append(G_hete)
