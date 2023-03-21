@@ -100,8 +100,6 @@ class HeteroGNNConv(pyg_nn.MessagePassing):
         node_feature_dst = self.lin_dst(node_feature_dst)
         aggr_out = self.lin_update(torch.cat((node_feature_dst, aggr_out), dim=-1))
 
-        ##########################################
-
         return aggr_out
 
 
@@ -159,21 +157,10 @@ class HeteroGNNWrapperConv(deepsnap.hetero_gnn.HeteroConv):
         return node_emb
     
     def aggregate(self, xs):
-        # TODO: Implement this function that aggregates all message type results.
-        # Here, xs is a list of tensors (embeddings) with respect to message 
-        # type aggregation results.
 
         if self.aggr == "mean":
-
-            ############# Your code here #############
-            ## (~2 lines of code)
-            ## Note:
-            ## 1. Explore the function parameter `xs`! 
-
             h = torch.stack(xs)
             return torch.mean(h, dim=0)
-
-            ##########################################
 
         elif self.aggr == "attn":
             N = xs[0].shape[0] # Number of nodes for that node type
