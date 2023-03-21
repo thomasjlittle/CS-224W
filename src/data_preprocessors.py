@@ -10,10 +10,13 @@ import torch_geometric
 import networkx as nx
 from deepsnap.hetero_graph import HeteroGraph
 import matplotlib.pyplot as plt
-import deep_graphgym
+# import run
 
 sys.path.append(os.getcwd() + "/src/BCDB")
 from SMILES import SMILES
+
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
 PHASES = {
@@ -48,9 +51,6 @@ BONDS = {
     "\\": 2,
     "/": 3,
 }
-
-# PHASES_ONEHOT = torch.nn.functional.one_hot(torch.arange(0, len(PHASES)), num_classes=-1)
-
 
 def load_data(args):
     raw_dataset = load_dataset(path="csv", data_files=args.dataset_path, split="train")
@@ -159,7 +159,7 @@ def set_graph_attrs(G, data, idx):
 
     # Node Level Features
     # Generate Node Level Features
-    node_types = {node: G._node[node]["atom"] for node in G.nodes()}
+    node_types = {node: G._node[node]["atom"].capitalize() for node in G.nodes()}
     node_labels = {node: ATOMS[node_types[node]] for node in G.nodes()}
     node_features = {
         node: torch.tensor([G._node[node]["in_functional_group"], 1 - data["f1"][idx]])
@@ -191,13 +191,33 @@ def set_graph_attrs(G, data, idx):
     for n1, n2, d in G.edges(data=True):
         d.clear()
 
+    edge_index = {}
+
     # Now set edge types
     for edge in G.edges():
-        edge_types[edge] = BONDS[edge_dict[edge]]
+        n1 = edge[0]
+        n2 = edge[1]
+        a1 = G._node[n1]["node_type"]
+        a2 = G._node[n2]["node_type"]
+
+        edge_type_str = BONDS[edge_dict[edge]]
+        message_type = (a1, edge_type_str, a2)
+
+        if message_type in edge_index.keys():
+            edge_index[message_type][0].append(n1)
+            edge_index[message_type][1].append(n2)
+        else: 
+            edge_index[message_type] = [[n1], [n2]]
+
+        edge_types[edge] = edge_type_str
+
+    for message_type in edge_index.keys():
+        edge_index[message_type] = torch.tensor(edge_index[message_type], device=device)
+
     nx.set_edge_attributes(G, edge_types, "edge_type")
 
     # Convert Graph to DeepSNAP Heterogeneous Graph
-    G_hete = HeteroGraph(G)
+    G_hete = HeteroGraph(G, edge_index=edge_index)
 
     # Set Graph Level Features
     graph_feature = torch.tensor([data["T"][idx], data["Mn"][idx]])
@@ -253,6 +273,11 @@ if __name__ == "__main__":
     dev_labels = label_splits[1]
     test_labels = label_splits[2]
 
-    # deep_graphgym.run_defined_experiments(train_graphs)
-    # deep_graphgym.run_defined_experiments(dev_graphs)
-    # deep_graphgym.run_defined_experiments(test_graphs)
+    # run.run_train_test(
+    #     train_graphs, 
+    #     dev_graphs, 
+    #     test_graphs, 
+    #     train_labels,
+    #     dev_labels,
+    #     test_labels
+    # )

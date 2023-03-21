@@ -51,7 +51,7 @@ def test(model, graph, indices, best_model=None, best_val=0, save_preds=False, a
         best_model = copy.deepcopy(model)
     return accs, best_model, best_val
 
-def run_train_test(train, dev, test):
+def run_train_test(train, dev, test, train_labels, dev_labels, test_labels):
     args = {
         'device': torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
         'hidden_size': 64,
@@ -65,6 +65,8 @@ def run_train_test(train, dev, test):
 
     # Load the data
     data = torch.load("acm.pkl")
+
+    print(data)
 
     # Message types
     message_type_1 = ("paper", "author", "paper")
