@@ -38,6 +38,7 @@ class HeteroGNN(torch.nn.Module):
     	    self.post_mps[node_type] = nn.Linear(self.hidden_size, hetero_graph.num_node_labels(node_type))
     	    
     def forward(self, node_feature, edge_index):
+    	x = node_feature
         x = self.convs1(x, edge_index)
 
         

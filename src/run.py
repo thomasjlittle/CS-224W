@@ -1,6 +1,9 @@
 import pandas as pd
 import torch
 from heteroGNN import HeteroGNN
+from deepsnap.dataset import GraphDataset
+from torch_geometric.loader import DataLoader
+from torch_sparse import SparseTensor, matmul
 
 def train(model, optimizer, hetero_graph, train_idx):
     model.train()
@@ -52,7 +55,7 @@ def test(model, graph, indices, best_model=None, best_val=0, save_preds=False, a
         best_model = copy.deepcopy(model)
     return accs, best_model, best_val
 
-def run_train_test(train, dev, test, train_labels, dev_labels, test_labels):
+def run_train_test(train_graphs, dev_graphs, test_graphs, train_labels, dev_labels, test_labels):
     args = {
         'device': torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
         'hidden_size': 64,
@@ -64,49 +67,40 @@ def run_train_test(train, dev, test, train_labels, dev_labels, test_labels):
 
     print("Device: {}".format(args['device']))
 
-    # # Message types
-    # message_type_1 = ("paper", "author", "paper")
-    # message_type_2 = ("paper", "subject", "paper")
+    train_graph_dataset = GraphDataset(train_graphs)
+    dev_graph_dataset = GraphDataset(dev_graphs)
+    test_graph_dataset = GraphDataset(test_graphs)
 
-    # # Dictionary of edge indices
-    # edge_index = {}
-    # edge_index[message_type_1] = data['pap']
-    # edge_index[message_type_2] = data['psp']
+    train_loader = DataLoader(train_graph_dataset)
 
-    # # Dictionary of node features
-    # node_feature = {}
-    # node_feature["paper"] = data['feature']
+    for hetero_graph in train_graphs:
 
-    # # Dictionary of node labels
-    # node_label = {}
-    # node_label["paper"] = data['label']
 
     # # Load the train, validation and test indices
-    # train_idx = {"paper": data['train_idx'].to(args['device'])}
-    # val_idx = {"paper": data['val_idx'].to(args['device'])}
-    # test_idx = {"paper": data['test_idx'].to(args['device'])}
+        train_idx = None # {"paper": data['train_idx'].to(args['device'])}
+        val_idx = None # {"paper": data['val_idx'].to(args['device'])}
+        test_idx = None # {"paper": data['test_idx'].to(args['device'])}
 
-    # # Construct a deepsnap tensor backend HeteroGraph
-    # hetero_graph = HeteroGraph(
-    #   node_feature=node_feature,
-    #   node_label=node_label,
-    #   edge_index=edge_index,
-    #   directed=True
-    # )
 
-    print(f"ACM heterogeneous graph: {hetero_graph.num_nodes()} nodes, {hetero_graph.num_edges()} edges")
+        # Node feature and node label to device
+        for key in hetero_graph.node_feature:
+            hetero_graph.node_feature[key] = hetero_graph.node_feature[key].to(args['device'])
+        for key in hetero_graph.node_label:
+            hetero_graph.node_label[key] = hetero_graph.node_label[key].to(args['device'])
 
-    # Node feature and node label to device
-    for key in hetero_graph.node_feature:
-        hetero_graph.node_feature[key] = hetero_graph.node_feature[key].to(args['device'])
-    for key in hetero_graph.node_label:
-        hetero_graph.node_label[key] = hetero_graph.node_label[key].to(args['device'])
+        total_nodes = 0
 
-    # Edge_index to sparse tensor and to device
-    for key in hetero_graph.edge_index:
-        edge_index = hetero_graph.edge_index[key]
-        adj = SparseTensor(row=edge_index[0], col=edge_index[1], sparse_sizes=(hetero_graph.num_nodes('paper'), hetero_graph.num_nodes('paper')))
-        hetero_graph.edge_index[key] = adj.t().to(args['device'])
+        node_dict = hetero_graph.num_nodes()
+        for node in node_dict:
+            total_nodes += node_dict[node]
+
+        # Edge_index to sparse tensor and to device
+        for key in hetero_graph.edge_index:
+            edge_index = hetero_graph.edge_index[key]
+            adj = SparseTensor(row=edge_index[0], col=edge_index[1], sparse_sizes=(total_nodes, total_nodes))
+            hetero_graph.edge_index[key] = adj.t().to(args['device'])
+
+
 
     # Mean Aggregation 
     best_model = None
