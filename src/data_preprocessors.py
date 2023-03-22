@@ -8,15 +8,16 @@ import os
 import torch
 import torch_geometric
 import networkx as nx
-from deepsnap.hetero_graph import HeteroGraph
+from deepsnap.hetero_graph import HeteroGraph, Graph
 import matplotlib.pyplot as plt
 import run
+import pickle
 
 sys.path.append(os.getcwd() + "/src/BCDB")
 from SMILES import SMILES
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 PHASES = {
@@ -51,6 +52,7 @@ BONDS = {
     "\\": 2,
     "/": 3,
 }
+
 
 def load_data(args):
     raw_dataset = load_dataset(path="csv", data_files=args.dataset_path, split="train")
@@ -206,7 +208,7 @@ def set_graph_attrs(G, data, idx):
         if message_type in edge_index.keys():
             edge_index[message_type][0].append(n1)
             edge_index[message_type][1].append(n2)
-        else: 
+        else:
             edge_index[message_type] = [[n1], [n2]]
 
         edge_types[edge] = edge_type_str
@@ -216,12 +218,12 @@ def set_graph_attrs(G, data, idx):
 
     nx.set_edge_attributes(G, edge_types, "edge_type")
 
-    # Convert Graph to DeepSNAP Heterogeneous Graph
-    G_hete = HeteroGraph(G, edge_index=edge_index)
+    # Convert Graph to DeepSNAP Graph
+    G_hete = Graph(G, edge_index=edge_index)
 
     # Set Graph Level Features
     graph_feature = torch.tensor([data["T"][idx], data["Mn"][idx]], device=device)
-    graph_label = torch.tensor(data["ID"][idx], device=device)
+    graph_label = torch.tensor([PHASES[data["phase1"][idx]]], device=device)
     G_hete.graph_feature = graph_feature
     G_hete.graph_label = graph_label
 
@@ -239,12 +241,12 @@ if __name__ == "__main__":
 
     # Load and split data
     data = load_data(args)
-    train, dev, test = split_data(data)
+    # train, dev, test = split_data(data)
 
     label_splits = []
     new_graphs = []
 
-    for split in [train, dev, test]:
+    for split in [data]:
         # Extract BigSMILES and SMILES strings
         BigSmiles = split["BigSMILES"]
         smiles = BigSMILES_to_SMILES(BigSmiles)
@@ -262,21 +264,30 @@ if __name__ == "__main__":
         for idx, graph in enumerate(graphs):
             G_hete_graph = set_graph_attrs(graph, split, idx)
             G_hete.append(G_hete_graph)
-            break
         new_graphs.append(G_hete)
 
-    train_graphs = new_graphs[0] 
-    dev_graphs = new_graphs[1]
-    test_graphs = new_graphs[2]
+    pickle.dump(new_graphs[0], open("BCDB.pkl", "wb"))
 
-    train_labels = label_splits[0]
-    dev_labels = label_splits[1]
-    test_labels = label_splits[2]
+    # train_graphs = new_graphs[0]
+    # dev_graphs = new_graphs[1]
+    # test_graphs = new_graphs[2]
+
+    # # save graph object to file
+    # pickle.dump(train_graphs, open("train_graphs.pkl", "wb"))
+    # pickle.dump(dev_graphs, open("dev_graphs.pkl", "wb"))
+    # pickle.dump(test_graphs, open("test_graphs.pkl", "wb"))
+
+    # train_labels = label_splits[0]
+    # dev_labels = label_splits[1]
+    # test_labels = label_splits[2]
+    # pickle.dump(train_labels, open("train_labels.pkl", "wb"))
+    # pickle.dump(dev_labels, open("dev_labels.pkl", "wb"))
+    # pickle.dump(test_labels, open("test_labels.pkl", "wb"))
 
     # run.run_train_test(
-    #     train_graphs, 
-    #     dev_graphs, 
-    #     test_graphs, 
+    #     train_graphs,
+    #     dev_graphs,
+    #     test_graphs,
     #     train_labels,
     #     dev_labels,
     #     test_labels
