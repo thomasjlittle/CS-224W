@@ -18,3 +18,6 @@ or
 sh run_single.sh (to run single)
 
 ((Prob double check that these work since we put GraphGym folder) inside the main folder))
+
+
+https://github.com/snap-stanford/GraphGym -- Tutorial/ how to run defaults
