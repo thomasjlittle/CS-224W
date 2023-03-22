@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/run",
+            "module": "main",
+            "args": [
+                "--cfg",
+                "configs/BCDB_Dataset.yaml",
+                "--repeat",
+                "3",
+            ],
+            "justMyCode": false
+        }
+    ]
+}

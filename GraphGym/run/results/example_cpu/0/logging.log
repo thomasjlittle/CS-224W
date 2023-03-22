@@ -1,0 +1,179 @@
+Load: 0.2482s, Before split: 0.0005338s, Split: 0.0003564s, After split: 0.0002925s
+GNN(
+  (preprocess): Preprocess(
+    node_feature: dim_out=1433
+    Total: dim_out=1433
+  )
+  (pre_mp): GeneralMultiLayer(
+    (Layer_0): GeneralLayer(
+      (layer): Linear(
+        (model): Linear(in_features=1433, out_features=256, bias=False)
+      )
+      (post_layer): Sequential(
+        (0): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (1): PReLU(num_parameters=1)
+      )
+    )
+  )
+  (mp): GNNStackStage(
+    (layer0): GeneralLayer(
+      (layer): GeneralConv(
+        (model): GeneralConvLayer(256, 256)
+      )
+      (post_layer): Sequential(
+        (0): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (1): PReLU(num_parameters=1)
+      )
+    )
+    (layer1): GeneralLayer(
+      (layer): GeneralConv(
+        (model): GeneralConvLayer(256, 256)
+      )
+      (post_layer): Sequential(
+        (0): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (1): PReLU(num_parameters=1)
+      )
+    )
+  )
+  (post_mp): GNNNodeHead(
+    (layer_post_mp): MLP(
+      (model): Sequential(
+        (0): Linear(
+          (model): Linear(in_features=256, out_features=7, bias=True)
+        )
+      )
+    )
+  )
+)
+bn:
+  eps: 1e-05
+  mom: 0.1
+cfg_dest: config.yaml
+custom_metrics: []
+dataset:
+  augment_feature: []
+  augment_feature_dims: []
+  augment_feature_repr: position
+  augment_label: 
+  augment_label_dims: 0
+  cache_load: False
+  cache_save: False
+  dir: ./datasets
+  edge_dim: 128
+  edge_encoder: False
+  edge_encoder_bn: True
+  edge_encoder_name: Bond
+  edge_message_ratio: 0.8
+  edge_negative_sampling_ratio: 1.0
+  edge_train_mode: all
+  encoder: True
+  encoder_bn: True
+  encoder_dim: 128
+  encoder_name: db
+  format: PyG
+  label_column: none
+  label_table: none
+  location: local
+  name: Cora
+  node_encoder: False
+  node_encoder_bn: True
+  node_encoder_name: Atom
+  remove_feature: False
+  resample_disjoint: False
+  resample_negative: False
+  shuffle_split: True
+  split: [0.8, 0.2]
+  split_mode: random
+  task: node
+  task_type: classification
+  to_undirected: False
+  transductive: True
+  transform: none
+  tu_simple: True
+device: cpu
+example_arg: example
+example_group:
+  example_arg: example
+gnn:
+  act: prelu
+  agg: add
+  att_final_linear: False
+  att_final_linear_bn: False
+  att_heads: 1
+  batchnorm: True
+  clear_feature: True
+  dim_inner: 256
+  dropout: 0.0
+  flow: source_to_target
+  head: node
+  keep_edge: 0.5
+  l2norm: True
+  layer_type: generalconv
+  layers_mp: 2
+  layers_post_mp: 1
+  layers_pre_mp: 1
+  msg_direction: single
+  normalize_adj: False
+  self_msg: concat
+  skip_every: 1
+  stage_type: stack
+gpu_mem: False
+mem:
+  inplace: False
+metric_agg: argmax
+metric_best: auto
+model:
+  edge_decoding: dot
+  graph_pooling: add
+  loss_fun: cross_entropy
+  match_upper: True
+  size_average: mean
+  thresh: 0.5
+  type: gnn
+num_threads: 6
+num_workers: 0
+optim:
+  base_lr: 0.01
+  lr_decay: 0.1
+  max_epoch: 400
+  momentum: 0.9
+  optimizer: adam
+  scheduler: cos
+  steps: [30, 60, 90]
+  weight_decay: 0.0005
+out_dir: results/example_cpu
+print: both
+round: 4
+run_dir: results/example_cpu/0
+seed: 1
+share:
+  dim_in: 1433
+  dim_out: 7
+  num_splits: 2
+tensorboard_agg: True
+tensorboard_each_run: False
+train:
+  auto_resume: False
+  batch_size: 32
+  ckpt_clean: True
+  ckpt_period: 100
+  enable_ckpt: True
+  epoch_resume: -1
+  eval_period: 20
+  iter_per_epoch: 32
+  mode: standard
+  neighbor_sizes: [20, 15, 10, 5]
+  node_per_graph: 32
+  radius: extend
+  sample_node: False
+  sampler: full_batch
+  skip_train_eval: False
+  walk_length: 4
+val:
+  node_per_graph: 32
+  radius: extend
+  sample_node: False
+  sampler: full_batch
+view_emb: False
+Num parameters: 632328
+Start from epoch 0

@@ -1,0 +1,6 @@
+{"epoch": 0, "loss": 1.4054, "loss_std": 0.043, "lr": 0.0, "lr_std": 0.0, "params": 134920.0, "params_std": 0.0, "time_iter": 0.0116, "time_iter_std": 0.0008, "accuracy": 0.5342, "accuracy_std": 0.0504}
+{"epoch": 19, "loss": 1.0745, "loss_std": 0.1284, "lr": 0.0, "lr_std": 0.0, "params": 134920.0, "params_std": 0.0, "time_iter": 0.0191, "time_iter_std": 0.011, "accuracy": 0.6666, "accuracy_std": 0.0285}
+{"epoch": 39, "loss": 0.7811, "loss_std": 0.0292, "lr": 0.0, "lr_std": 0.0, "params": 134920.0, "params_std": 0.0, "time_iter": 0.037, "time_iter_std": 0.0129, "accuracy": 0.6924, "accuracy_std": 0.0077}
+{"epoch": 59, "loss": 0.7061, "loss_std": 0.0617, "lr": 0.0, "lr_std": 0.0, "params": 134920.0, "params_std": 0.0, "time_iter": 0.0632, "time_iter_std": 0.0064, "accuracy": 0.7206, "accuracy_std": 0.0179}
+{"epoch": 79, "loss": 0.6746, "loss_std": 0.0423, "lr": 0.0, "lr_std": 0.0, "params": 134920.0, "params_std": 0.0, "time_iter": 0.0719, "time_iter_std": 0.0076, "accuracy": 0.7363, "accuracy_std": 0.01}
+{"epoch": 99, "loss": 0.6526, "loss_std": 0.0354, "lr": 0.0, "lr_std": 0.0, "params": 134920.0, "params_std": 0.0, "time_iter": 0.079, "time_iter_std": 0.0023, "accuracy": 0.7307, "accuracy_std": 0.0189}

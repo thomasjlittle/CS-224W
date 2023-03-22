@@ -1,0 +1,20 @@
+# Format for each row: name in config.py; alias; range to search
+# No spaces, except between these 3 fields
+# Line breaks are used to union different grid search spaces
+# Feel free to add '#' to add comments
+
+# dataset: nx, task: graph, label: graph_path_len
+dataset.format format ['nx']
+dataset.name dataset ['BCDB']
+dataset.task task ['graph']
+dataset.transductive trans [False]
+gnn.layer_type l_t ['gcnconv','gatconv','ginconv']
+gnn.layers_pre_mp l_pre [1]
+gnn.layers_mp l_mp [4]
+gnn.layers_post_mp l_post [1]
+gnn.stage_type stage ['stack']
+gnn.batchnorm bn [True,False]
+gnn.act act ['prelu']
+gnn.dropout drop [0.0,0.4]
+gnn.agg agg ['add','mean','max']
+optim.optimizer optim ['adam']

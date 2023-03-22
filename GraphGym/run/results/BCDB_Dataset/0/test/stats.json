@@ -1,0 +1,6 @@
+{"epoch": 0, "loss": 1.4138, "lr": 0, "params": 134920, "time_iter": 0.0108, "accuracy": 0.5631}
+{"epoch": 19, "loss": 0.9439, "lr": 0, "params": 134920, "time_iter": 0.0114, "accuracy": 0.693}
+{"epoch": 39, "loss": 0.8209, "lr": 0, "params": 134920, "time_iter": 0.0231, "accuracy": 0.6836}
+{"epoch": 59, "loss": 0.7912, "lr": 0, "params": 134920, "time_iter": 0.071, "accuracy": 0.6968}
+{"epoch": 79, "loss": 0.7321, "lr": 0, "params": 134920, "time_iter": 0.0615, "accuracy": 0.7232}
+{"epoch": 99, "loss": 0.7015, "lr": 0, "params": 134920, "time_iter": 0.0821, "accuracy": 0.7137}
