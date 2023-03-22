@@ -9,13 +9,29 @@ General idea - recreate diblock microphase separation plot as baseline and then 
 - A config file was created in run/configs
 - A grid file was created in run/grids
 
+## Database
+
+## Data processing
+
+## Developing locally
+
+Since we forked from the Stanford Network Analysis Platform(snap) [repository](https://github.com/snap-stanford/GraphGym/blob/master/README.md), we run our code similar to them. 
 
 To run the code: 
-cd GraphGym/run
-sh run_batch.sh (to run grid batch)
 
-or 
+For grid batch we run:
+
+```bash
+cd GraphGym/run
+bash run_batch.sh 
+```
+
+or if you would like to run a single batch then: 
+
+```bash
+cd GraphGym/run
 sh run_single.sh (to run single)
+```
 
 ((Prob double check that these work since we put GraphGym folder) inside the main folder))
 
