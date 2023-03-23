@@ -267,28 +267,3 @@ if __name__ == "__main__":
         new_graphs.append(G_hete)
 
     pickle.dump(new_graphs[0], open("BCDB.pkl", "wb"))
-
-    # train_graphs = new_graphs[0]
-    # dev_graphs = new_graphs[1]
-    # test_graphs = new_graphs[2]
-
-    # # save graph object to file
-    # pickle.dump(train_graphs, open("train_graphs.pkl", "wb"))
-    # pickle.dump(dev_graphs, open("dev_graphs.pkl", "wb"))
-    # pickle.dump(test_graphs, open("test_graphs.pkl", "wb"))
-
-    # train_labels = label_splits[0]
-    # dev_labels = label_splits[1]
-    # test_labels = label_splits[2]
-    # pickle.dump(train_labels, open("train_labels.pkl", "wb"))
-    # pickle.dump(dev_labels, open("dev_labels.pkl", "wb"))
-    # pickle.dump(test_labels, open("test_labels.pkl", "wb"))
-
-    # run.run_train_test(
-    #     train_graphs,
-    #     dev_graphs,
-    #     test_graphs,
-    #     train_labels,
-    #     dev_labels,
-    #     test_labels
-    # )
