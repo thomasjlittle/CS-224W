@@ -10,6 +10,12 @@ In order to be able to turn the polymers into deepsnap graphs, we needed to proc
 
 After processing the data, we placed created a database using the deepsnap graphs into `BCDB.pkl` file. This allowed us to be able to use the databse with GraphGym. GraphGym did not support custom splits at the time, so we simply allowed it to splot our graphs into training, dev, and test sets with a 80% train, 10% dev, and 10% test split. For our labels we used the polymer's phase classification for each of the graphs.
 
+All of this processing was done by running the following script in the root directory after having activated the conda environment specified in the `environment.yml` file in the root directory.
+
+```bash
+python ./src/data_preprocessors.py
+```
+
 ## Database
 
 [Block Copolymer Phase Behavior Database(BCDB)](https://github.com/olsenlabmit/BCDB) contains 5300 entries of 61 different polymers at different temperatures and molar mass at different phases. As mentioned above, after we processed our data we saved it but we also added a BCDB database class under `GraphGym/BCDB_Databse/BCDB_dataset.py`.
